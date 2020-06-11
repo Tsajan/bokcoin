@@ -8,7 +8,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
-	<title>Index Page</title>
+	<title>Burn Tokens</title>
 </head>
 <body>
 	<!-- jumbotron section -->
@@ -17,17 +17,14 @@
 	</div>
 	<!-- end of jumbotron section -->
 
-	<!--start of navbar 
+	<!--start of navbar
 	<nav class="navbar navbar-expand-xl py-3 navbar-light whitebg">
 		<div class="container">
 			<div id="navbarSupportedContent" class="collapse navbar-collapse">
 				<ul class="navbar-nav mx-auto">
-					<li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="index.html" class="nav-link">Add Tokens</a></li>
-					<li class="nav-item"><a href="index.html" class="nav-link">Burn Tokens</a></li>
-					<li class="nav-item"><a href="index.html" class="nav-link">Offer Deposit</a></li>
-					<li class="nav-item"><a href="index.html" class="nav-link">Make Deposit</a></li>
-					<li class="nav-item"><a href="index.html" class="nav-link">Redeem Deposit</a></li>
+					<li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="{{url_for('signup')}}" class="nav-link">  Sign Up</a></li>
+					<li class="nav-item"><a href="{{url_for('login')}}" class="nav-link">  Login</a></li>
 				</ul>
 			</div>
 		</div>
@@ -55,24 +52,23 @@
 			<br/>
 		</p>
 		<hr/>
-		<p> Total Coins in Circulation. <span id="totalSupply"></span>&nbsp; BOK. </p>
+		<p> Total Coins in Circulation. <span id="totalSupply"></span> BOK. </p>
 		<hr/>
 		<p> You currently have <span id="accountBalance"></span>&nbsp; BOK. </p>
 		<p id="accountAddress"></p>
 
 		<hr/>
 
-		<div class="row">
-	    	<div class="col-sm-12 text-center">
-	    		<a href="minttoken.html"><button class="btn btn-primary btn-md">Add New Tokens</button></a>
-	    		<a href="burntoken.html"><button class="btn btn-danger btn-md">Burn Tokens</button></a>
-	    		<a href="transfer.html"><button class="btn btn-success btn-md">Transfer Tokens</button></a>
-	        	<a href="offerdeposit.html"><button class="btn btn-warning btn-md">Offer Deposit</button></a>
-	        	<a href="makedeposit.html"><button class="btn btn-info btn-md">Make Deposit</button></a>
-	        	<a href="redeemdeposit.html"><button class="btn btn-dark btn-md">Redeem Deposit</button></a>
-	    	</div>
-		</div>
+		<form onSubmit="App.burnTokens(); return false;" action="index.html">
+			<div class="form-group">
+				<label for="quantityToBurn">Quantity</label>
+				<input type="number" class="form-control" step="1" pattern="\d*" name="quantityToBurn" id="quantityToBurn" aria-describedby="quantityhelp">
+				<small id="quantityhelp" class="form-text text-muted">No decimals allowed</small>
+			</div>
 
+			<button type="submit" class="btn btn-danger">Burn Tokens</button>
+			<button type="reset" class="btn btn-secondary">Reset</button>
+		</form>
 	</div>
 
 </body>

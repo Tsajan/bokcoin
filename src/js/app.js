@@ -4,6 +4,7 @@ App = {
 	account: '0x0',
 	loading: false,
 	accountBalance: 0,
+	totalSupply: 0,
 
 	init: function() {
 		console.log("App initialized...")
@@ -58,8 +59,93 @@ App = {
 			console.log("Corresponding Account has " , accountBal.toNumber());
 			App.accountBalance = accountBal;
 			$('#accountBalance').html(accountBal.toNumber());
-
+			return bokcoinInstance.totalSupply();
+		}).then(function(totalSupply) {
+			App.totalSupply = totalSupply;
+			$('#totalSupply').html(totalSupply.toNumber());
 		});
+	},
+
+	addTokens: function() {
+		var quantityToAdd = $('#quantityToAdd').val();
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.addTokens(quantityToAdd, {
+				from: App.account,
+				gas: 500000
+			}).then(function(result) {
+				console.log("New tokens added");
+			});
+		})
+	},
+
+	burnTokens: function() {
+		var quantityToBurn = $('#quantityToBurn').val();
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.burnTokens(quantityToBurn, {
+				from: App.account,
+				gas: 500000
+			}).then(function(result) {
+				console.log("Tokens burned successfully");
+			})
+		})
+	},
+
+	transferTokens: function() {
+		var recipient = $('#recipient').val();
+		var transferamt = $('#transferamt').val();
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.transfer(recipient, transferamt, {
+				from: App.account,
+				gas: 500000
+			}).then(function(result) {
+				console.log("Transfer completed successfully");
+			})
+		})
+	},
+
+	offerDeposit: function() {
+		var rateOffered = $('#rateOffered').val();
+		var timeperiod = $('#timeperiod').val();
+		var maxAcptDeposit = $('#maxAcptDeposit').val();
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.offerDeposit(rateOffered, timeperiod, maxAcptDeposit, {
+				from: App.account,
+				gas: 500000
+			}).then(function(result) {
+				console.log("An account has offered deposit");
+			})
+		})
+	},
+
+	makeDeposit: function() {
+		var depositid = $('#depositid').val();
+		var principal = $('#principal').val();
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.makeDeposit(depositid, principal, {
+				from: App.account,
+				gas: 500000
+			}).then(function(result) {
+				console.log("An account has made deposit");
+			})
+		})
+	},
+
+	redeemDeposit: function() {
+		var depositid = $('#depositid').val();
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.receiveBack(depositid, {
+				from: App.account,
+				gas: 500000
+			}).then(function(result) {
+				console.log("Redemption of a deposit made is completed");
+			})
+		})
 	}
 }
 
