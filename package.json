@@ -1,0 +1,15 @@
+{
+	"name": "BOKCoin",
+	"description": "CBDC prototype for Bank of Korea in Ethereum",
+	"main": "truffle-config.js",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"dev": "lite-server"
+	},
+	"author": "Sajan",
+	"devDependencies": {
+		"lite-server": "^2.3.0"
+	}
+}

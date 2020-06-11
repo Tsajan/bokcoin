@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link href="css/style.css" rel="stylesheet">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<title>Index Page</title>
+</head>
+<body>
+	<!-- jumbotron section -->
+	<div class="jumbotron bg-dark text-white">
+		<center><h1 class="display-6 centering">Central Bank Digital Currency Web Application</h1></center>
+	</div>
+	<!-- end of jumbotron section -->
+
+	<!--start of navbar
+	<nav class="navbar navbar-expand-xl py-3 navbar-light whitebg">
+		<div class="container">
+			<div id="navbarSupportedContent" class="collapse navbar-collapse">
+				<ul class="navbar-nav mx-auto">
+					<li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="{{url_for('signup')}}" class="nav-link">  Sign Up</a></li>
+					<li class="nav-item"><a href="{{url_for('login')}}" class="nav-link">  Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	end of navbar-->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/truffle-contract.min.js"></script>
+	<script src="js/app.js"></script>
+	<div class="container">
+		<p>
+		Welcome to the CBDC application developed by Sajan Maharjan. This is only a prototype implementation with lots of room for improvement. We use a NodeJS library lite-server with bootstrap for styling and CSS, while we use web3 APIs to connect to the Ethereum blockchain running in the ganache
+		</p>
+
+		<br/>
+
+		<p> 
+			Introducing BOKCoin! The cryptocurrency approved by the Bank of Korea! Get some BOKCoins today! 
+			<br/>
+			<hr/>
+			You currently have <span id="accountBalance"></span>&nbsp; BOK.
+		</p>
+
+		<p id="accountAddress"></p>
+
+	</div>
+
+</body>
+</html>
