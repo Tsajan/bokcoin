@@ -5,6 +5,7 @@ App = {
 	loading: false,
 	accountBalance: 0,
 	totalSupply: 0,
+	depositCount: 0,
 
 	init: function() {
 		console.log("App initialized...")
@@ -51,6 +52,7 @@ App = {
 				$('#accountAddress').html("Your Account: " + account);
 			}
 		})
+
 
 		App.contracts.BOKCoin.deployed().then(function(instance) {
 			bokcoinInstance = instance;
@@ -146,6 +148,29 @@ App = {
 				console.log("Redemption of a deposit made is completed");
 			})
 		})
+	},
+
+	viewDeposits: function() {
+		var deposits = [];
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.depositCount();
+		}).then(async function(depositCount) {
+			var count = depositCount.toNumber();
+			console.log(count);
+			for(var i=1; i<=count; i++) {
+				var x = await bokcoinInstance.deposits(i);
+				deposits.push(x);
+			}
+			console.log(deposits);
+			var data = JSON.parse(JSON.stringify(deposits));
+			console.log(data);
+			console.log(typeof deposits);
+			console.log(typeof data);
+			//send deposits to an html as an id 
+			//$('#deposits').html(deposits);
+			//return deposits;
+		});
 	}
 }
 
