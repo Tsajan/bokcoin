@@ -152,6 +152,7 @@ App = {
 
 	viewDeposits: function() {
 		var deposits = [];
+		var data;
 		App.contracts.BOKCoin.deployed().then(function(instance) {
 			bokcoinInstance = instance;
 			return bokcoinInstance.depositCount();
@@ -162,15 +163,39 @@ App = {
 				var x = await bokcoinInstance.deposits(i);
 				deposits.push(x);
 			}
-			console.log(deposits);
-			var data = JSON.parse(JSON.stringify(deposits));
-			console.log(data);
-			console.log(typeof deposits);
-			console.log(typeof data);
-			//send deposits to an html as an id 
-			//$('#deposits').html(deposits);
-			//return deposits;
+			data = JSON.parse(JSON.stringify(deposits));
+			console.log("Data length: " + data.length);
+			var depositentries = '';
+			for(var i=0; i<data.length; i++) {
+				depositentries += '<tr>';
+				depositentries += '<td>' + data[i][0] + '</td>';
+				depositentries += '<td>' + data[i][1] + '</td>';
+				depositentries += '<td>' + data[i][2] + '</td>';
+				depositentries += '<td>' + data[i][3] + '</td>';
+				depositentries += '<td>' + data[i][4] + '</td>';
+				depositentries += '<td>' + data[i][5] + '</td>';
+				depositentries += '<td>' + data[i][9] + '</td>';
+				depositentries += '<td>' + data[i][6] + '</td>';
+				depositentries += '<td>' + data[i][11] + '</td>';
+				depositentries += '<td>' + data[i][12] + '</td>';
+				depositentries += '</tr>';
+
+			}
+			
+			console.log(depositentries);
+			$('#depositdetails').html(depositentries);
 		});
+	},
+
+	getPastEvents: function() {
+		var options = { filter: { _from: '0xc737994e752424b5d912aFCD682C086d45821032' }, fromBlock: 0, toBlock: 'latest' };
+
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.getPastEvents('Transfer', options);
+		}).then(function(txndata) {
+			console.log(txndata);
+		})
 	}
 }
 
