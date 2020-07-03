@@ -57,6 +57,7 @@ App = {
 		App.contracts.BOKCoin.deployed().then(function(instance) {
 			bokcoinInstance = instance;
 			return bokcoinInstance.balanceOf(App.account);
+			console.log(App.account);
 		}).then(function(accountBal) {
 			console.log("Corresponding Account has " , accountBal.toNumber());
 			App.accountBalance = accountBal;
@@ -187,7 +188,83 @@ App = {
 		});
 	},
 
-	getPastEvents: function() {
+	viewAccounts: function() {
+		var data;
+		var accounts = [];
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.userAccountsNum();
+		}).then(async function(userAccountsNum) {
+			var count = userAccountsNum.toNumber();
+			for(var i=1; i<=count; i++) {
+				var x = await bokcoinInstance.accountDetailsById(i);
+				accounts.push(x);
+			}
+			data = JSON.parse(JSON.stringify(accounts));
+			console.log("Data length: " + data.length);
+			var accountentries = '';
+			for(var i=0; i<data.length; i++) {
+				accountentries += '<tr>';
+				accountentries += '<td>' + data[i][4] + '</td>';
+				accountentries += '<td>' + data[i][0] + '</td>';
+				accountentries += '<td>' + data[i][1] + '</td>';
+				accountentries += '<td>' + data[i][2] + '</td>';
+				accountentries += '<td>' + data[i][3] + '</td>';
+				accountentries += '</tr>';
+			}
+
+			console.log(accountentries);
+			$('#accountdetails').html(accountentries);
+		})
+	},
+
+	createUserAccount: async function() {
+		var rname = $('#realname').val()
+		var identity = $('#identity').val()
+		var pswd = $('#pswd').val()
+		var addr; //to store the account address generated
+		console.log(rname);
+		console.log(identity);
+		console.log(pswd);
+
+		//portion for creating new account
+		var accdata = await web3.personal.newAccount(pswd, function(err, data) {
+			console.log(data)
+			addr = data;
+		});
+
+		setTimeout(function() {
+			console.log("Awaiting promise");
+			App.contracts.BOKCoin.deployed().then(function(instance) {
+				bokcoinInstance = instance;
+				return bokcoinInstance.addUserAddressInfo(addr, rname, identity, {
+					from: App.account,
+					gas: 500000
+				}).then(function(result) {
+					console.log("User Account Info has been successfully written to Blockchain!");
+				});
+			});
+			//$('#generatedaddr').html(addr);
+			//$('#myModal').modal('show');
+		}, 3000);
+	},
+
+	enlistBank: function() {
+		var bankaddr = $('#bankaddr').val()
+		App.contracts.BOKCoin.deployed().then(function(instance) {
+			bokcoinInstance = instance;
+			return bokcoinInstance.addBank(bankaddr, {
+				from: App.account,
+				gas: 500000
+			}).then(function(err, result) {
+				if(!err) {
+					console.log("Input Address has been successfully enlisted as Bank in blockchain");
+				}
+			});
+		});
+	},
+
+	viewTxnData: function() {
 		var options = { filter: { _from: '0xc737994e752424b5d912aFCD682C086d45821032' }, fromBlock: 0, toBlock: 'latest' };
 
 		App.contracts.BOKCoin.deployed().then(function(instance) {

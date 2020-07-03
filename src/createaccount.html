@@ -8,7 +8,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
-	<title>Initiate Deposit</title>
+	<title>Create Account</title>
 </head>
 <body>
 	<!-- jumbotron section -->
@@ -57,23 +57,51 @@
 
 		<hr/>
 
-		<form onSubmit="App.makeDeposit(); return false;" action="index.html">
+		<form onSubmit="App.createUserAccount(); return false;" action="index.html">
 			<div class="form-group">
-				<label for="depositid">Deposit ID</label>
-				<input type="number" class="form-control" step="1" pattern="\d*" name="depositid" id="depositid" aria-describedby="depositidhelp" required>
-				<small id="depositidhelp" class="form-text text-muted">Input the ID of which offered deposit and is available</small>
+				<label for="realname">Name</label>
+				<input type="text" class="form-control" name="realname" id="realname" aria-describedby="realnamehelp" required>
+				<small id="realnamehelp" class="form-text text-muted">Input the real name of the user</small>
 			</div>
 
 			<div class="form-group">
-				<label for="principal">Principal</label>
-				<input type="number" class="form-control" step="1" pattern="\d*" name="principal" id="principal" aria-describedby="principalhelp" required>
-				<small id="principalhelp" class="form-text text-muted">The amount of coins you want to deposit in.</small>
+				<label for="pswd">Password</label>
+				<input type="password" class="form-control" name="pswd" id="pswd" aria-describedby="pswdhelp" required>
+				<small id="pswdhelp" class="form-text text-muted">Input the password for the unlocking the account. Not stored in blockchain.</small>
 			</div>
 
-			<button type="submit" class="btn btn-warning">Make Deposit</button>
+			<div class="form-group">
+				<label for="identity">Identification</label>
+				<input type="text" class="form-control" name="identity" id="identity" aria-describedby="identityhelp" required>
+				<small id="identityhelp" class="form-text text-muted">Real World Identification. e.g., SSN, ARC, etc.</small>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Create Account</button>
 			<button type="reset" class="btn btn-secondary">Reset</button>
 		</form>
 	</div>
+
+	<!-- Start of Modal-->
+	<div class="modal fade" tabindex="-1" id="myModal" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Success, Account created!!!!</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<p><span id="generatedaddr"></span></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of Modal -->
 
 </body>
 </html>

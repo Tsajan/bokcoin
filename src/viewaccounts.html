@@ -8,7 +8,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
-	<title>Initiate Deposit</title>
+	<title>View Account Details</title>
 </head>
 <body>
 	<!-- jumbotron section -->
@@ -27,7 +27,7 @@
 					<li class="nav-item"><a href="transfer.html" class="nav-link">Transfer Tokens</a></li>
 					<li class="nav-item"><a href="burntoken.html" class="nav-link">Burn Tokens</a></li>
 					<li class="nav-item"><a href="offerdeposit.html" class="nav-link">Offer Deposit</a></li>
-					<li class="nav-item"><a href="viewdeposit.html" class="nav-link">View Deposits</a></li>
+					<li class="nav-item active"><a href="viewdeposit.html" class="nav-link">View Deposits</a></li>
 				</ul>
 			</div>
 		</div>
@@ -41,6 +41,20 @@
 	<script src="js/web3.min.js"></script>
 	<script src="js/truffle-contract.min.js"></script>
 	<script src="js/app.js"></script>
+	<script>
+		$(window).load(function() {
+			var data;
+			var txndata;
+			//App.init();
+			
+			setTimeout(function() {
+				data = App.viewAccounts();
+			}, 3000);
+			//var accountentries = '';
+
+
+		});
+	</script>
 
 
 	<div class="container">
@@ -56,23 +70,26 @@
 		<p id="accountAddress"></p>
 
 		<hr/>
+	</div>
 
-		<form onSubmit="App.makeDeposit(); return false;" action="index.html">
-			<div class="form-group">
-				<label for="depositid">Deposit ID</label>
-				<input type="number" class="form-control" step="1" pattern="\d*" name="depositid" id="depositid" aria-describedby="depositidhelp" required>
-				<small id="depositidhelp" class="form-text text-muted">Input the ID of which offered deposit and is available</small>
-			</div>
+	<div class="container">
 
-			<div class="form-group">
-				<label for="principal">Principal</label>
-				<input type="number" class="form-control" step="1" pattern="\d*" name="principal" id="principal" aria-describedby="principalhelp" required>
-				<small id="principalhelp" class="form-text text-muted">The amount of coins you want to deposit in.</small>
-			</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">User Address</th>
+					<th scope="col">Creator Address</th>
+					<th scope="col">Real World Name</th>
+					<th scope="col">Identification</th>
+				</tr>
+			</thead>
+			<tbody id="accountdetails">
+			</tbody>
+		</table>
 
-			<button type="submit" class="btn btn-warning">Make Deposit</button>
-			<button type="reset" class="btn btn-secondary">Reset</button>
-		</form>
+		<hr/>
+
 	</div>
 
 </body>
